@@ -1,184 +1,205 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>La Última Página de Internet</title>
-<style>
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    body { background-color: #0b0b0b; color: #f5f5f5; line-height: 1.6; }
-
-    .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }
-
-    .header-container { text-align: left; margin-bottom: 20px; }
-    .header-container h1 {
-        font-size: clamp(1.5rem, 6vw, 3rem);
-        font-weight: 800;
-        background: linear-gradient(90deg, #8e2de2, #4a00e0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        white-space: nowrap;
-        overflow-x: auto;
-        margin-bottom: 10px;
-    }
-    .header-container .intro-bold {
-        font-size: clamp(1rem, 4vw, 1.2rem);
-        font-weight: 700;
-        color: #fff;
-        white-space: nowrap;
-        overflow-x: auto;
-        margin-bottom: 5px;
-    }
-    .header-container .intro-grey {
-        font-size: 1rem;
-        color: #777;
-        margin-bottom: 10px;
-    }
-
-    .content-title {
-        text-align: center;
-        font-size: 2rem;
-        font-weight: 700;
-        margin-top: 0;
-        margin-bottom: 30px;
-        background: linear-gradient(90deg, #8e2de2, #4a00e0);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-    }
-
-    .doc-section { margin-bottom: 40px; padding: 20px; border: 1px solid #333; border-radius: 8px; transition: transform 0.3s; }
-    .doc-section:hover { transform: scale(1.02); }
-    .doc-title { font-size: 1.8rem; margin-bottom: 10px; color: #fff; }
-    .doc-desc { margin-bottom: 15px; color: #aaa; }
-    .btn { padding: 10px 20px; background-color: #1e1e1e; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }
-    .btn:hover { background-color: #444; }
-
-    .modal { display: none; position: fixed; top: 0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }
-    .modal-content { background-color: #111; padding: 20px; border-radius: 8px; max-width: 80%; max-height: 80%; overflow: auto; position: relative; color: #f5f5f5; }
-    .modal-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #fff; }
-
-    footer { text-align: center; padding: 20px; margin-top: 50px; border-top: 1px solid #333; color: #777; font-size: 0.9rem; }
-
-    @media (max-width: 600px) {
-        h1 { font-size: 2rem; }
-        .doc-title { font-size: 1.5rem; }
-    }
-</style>
-</head>
-<body>
-
-<!-- MODAL INICIAL -->
-<div id="modal-background" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:flex;justify-content:center;align-items:center;z-index:2000;">
-  <div id="modal-initial" style="background-color:#111;border:1px solid #333;border-radius:14px;padding:10px 20px;max-width:90%;width:420px;text-align:center;box-shadow:0 0 20px rgba(255,255,255,0.03);">
-    <h2 style="color:#fff;font-size:1.3rem;text-align:center;margin-bottom:14px;border-bottom:1px solid #555;padding-bottom:10px;white-space:nowrap;overflow-x:auto;">
-      La Última Página de Internet
-    </h2>
-
-    <p style="color:#fff;font-size:1rem;line-height:1.7;text-align:justify;margin:0 auto 26px auto;width:100%;">
-      <strong>He visto la red crecer y desvanecerse.</strong><br><br>
-      Entre enlaces rotos y píxeles olvidados, guardo lo que la historia digital ha dejado atrás.<br><br>
-      Este espacio es un reflejo de esa memoria: un recorrido silencioso por la actualidad y por lo que la web fue, aquello que nunca volverá a ser.
-    </p>
-
-    <div style="text-align:center;">
-      <button class="modal-btn btn-access" style="margin:8px 10px;padding:10px 20px;border-radius:8px;background:#2ecc71;color:#fff;border:none;font-weight:600;">Acceder</button>
-      <button class="modal-btn btn-exit" style="margin:8px 10px;padding:10px 20px;border-radius:8px;background:#e74c3c;color:#fff;border:none;font-weight:600;">Salir</button>
-    </div>
-  </div>
-</div>
-
-<div class="container">
-    <div class="header-container">
-        <h1>La Última Página de Internet</h1>
-        <p class="intro-bold">Bienvenido al final del recorrido digital.</p>
-        <p class="intro-grey">Un espacio que refleja la realidad actual de Internet.</p>
-    </div>
-
-    <div class="content-title">Memorias de la red</div>
-
-    <div class="doc-section">
-        <div class="doc-title">El Espejo del Olvido</div>
-        <div class="doc-desc">Reflejos del pasado digital que invitan a la introspección.</div>
-        <button class="btn" data-doc="doc1.html">Abrir documento</button>
-    </div>
-
-    <div class="doc-section">
-        <div class="doc-title">Zona de Susurros</div>
-        <div class="doc-desc">Mensajes efímeros y secretos que solo existen en el silencio digital.</div>
-        <button class="btn" data-doc="doc2.html">Abrir documento</button>
-    </div>
-
-    <div class="doc-section">
-        <div class="doc-title">Caminos que Nunca Existieron</div>
-        <div class="doc-desc">Enlaces que llevan al vacío, recordando la ilusión de la elección.</div>
-        <button class="btn" data-doc="doc3.html">Abrir documento</button>
-    </div>
-
-    <div class="doc-section">
-        <div class="doc-title">Archivo de la Desconexión</div>
-        <div class="doc-desc">Fragmentos perdidos de sitios antiguos que evocan nostalgia digital.</div>
-        <button class="btn" data-doc="doc4.html">Abrir documento</button>
-    </div>
-
-    <div class="doc-section">
-        <div class="doc-title">El Último Pixel</div>
-        <div class="doc-desc">La web se desvanece hasta quedarse en un único pixel, símbolo de la impermanencia.</div>
-        <button class="btn" data-doc="doc5.html">Abrir documento</button>
-    </div>
-</div>
-
-<!-- MODAL DE DOCUMENTOS -->
-<div class="modal" id="modal">
-  <div class="modal-content">
-      <span class="modal-close" id="modal-close">&times;</span>
-      <iframe id="modal-iframe" src="" style="width:100%; height:80vh; border:none;"></iframe>
-  </div>
-</div>
-
-<footer>© NEXUS Código</footer>
-
-<script>
-    const modalBg = document.getElementById('modal-background');
-    const accessBtn = document.querySelector('.btn-access');
-    const exitBtn = document.querySelector('.btn-exit');
-
-    accessBtn.addEventListener('click', () => {
-        modalBg.style.transition = 'opacity 0.5s ease';
-        modalBg.style.opacity = '0';
-        setTimeout(() => { modalBg.style.display = 'none'; }, 500);
-    });
-
-    exitBtn.addEventListener('click', () => {
-        document.body.innerHTML = '';
-        document.body.style.backgroundColor = '#000';
-        document.body.style.overflow = 'hidden';
-    });
-
-    const modal = document.getElementById('modal');
-    const modalIframe = document.getElementById('modal-iframe');
-    const btns = document.querySelectorAll('.btn');
-    const modalClose = document.getElementById('modal-close');
-
-    btns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            const doc = btn.getAttribute('data-doc');
-            modalIframe.src = doc;
-            modal.style.display = 'flex';
-        });
-    });
-
-    modalClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-        modalIframe.src = '';
-    });
-
-    window.addEventListener('click', (e) => {
-        if(e.target === modal) {
-            modal.style.display = 'none';
-            modalIframe.src = '';
-        }
-    });
-</script>
-
-</body>
+<!DOCTYPE html>  
+<html lang="es">  
+<head>  
+<meta charset="UTF-8">  
+<meta name="viewport" content="width=device-width, initial-scale=1.0">  
+<title>La Última Página de Internet</title>  
+<style>  
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }  
+    body { background-color: #0b0b0b; color: #f5f5f5; line-height: 1.6; }  
+  
+    .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }  
+  
+    .header-container { text-align: left; margin-bottom: 20px; }  
+    .header-container h1 {  
+        font-size: clamp(1.5rem, 6vw, 3rem);  
+        font-weight: 800;  
+        background: linear-gradient(90deg, #8e2de2, #4a00e0);  
+        -webkit-background-clip: text;  
+        -webkit-text-fill-color: transparent;  
+        white-space: nowrap;  
+        overflow-x: auto;  
+        margin-bottom: 10px;  
+    }  
+    .header-container .intro-bold {  
+        font-size: clamp(1rem, 4vw, 1.2rem);  
+        font-weight: 700;  
+        color: #fff;  
+        white-space: nowrap;  
+        overflow-x: auto;  
+        margin-bottom: 5px;  
+    }  
+    .header-container .intro-grey {  
+        font-size: 1rem;  
+        color: #777;  
+        margin-bottom: 10px;  
+    }  
+  
+    .content-title {  
+        text-align: center;  
+        font-size: 2rem;  
+        font-weight: 700;  
+        margin-top: 0;  
+        margin-bottom: 30px;  
+        background: linear-gradient(90deg, #8e2de2, #4a00e0);  
+        -webkit-background-clip: text;  
+        -webkit-text-fill-color: transparent;  
+    }  
+  
+    .doc-section { margin-bottom: 40px; padding: 20px; border: 1px solid #333; border-radius: 8px; transition: transform 0.3s; }  
+    .doc-section:hover { transform: scale(1.02); }  
+    .doc-title { font-size: 1.8rem; margin-bottom: 10px; color: #fff; }  
+    .doc-desc { margin-bottom: 15px; color: #aaa; }  
+    .btn { padding: 10px 20px; background-color: #1e1e1e; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }  
+    .btn:hover { background-color: #444; }  
+  
+    .modal { display: none; position: fixed; top: 0; left:0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); justify-content: center; align-items: center; z-index: 1000; }  
+    .modal-content {  
+        background-color: #111;  
+        padding: 30px 40px;  
+        border-radius: 12px;  
+        max-width: 900px;  
+        width: 90%;  
+        max-height: 85vh;  
+        overflow: hidden;  
+        position: relative;  
+        color: #f5f5f5;  
+        display: flex;  
+        flex-direction: column;  
+    }  
+    .modal-content iframe {  
+        width: 100%;  
+        height: 75vh;  
+        border: none;  
+        border-radius: 8px;  
+        background: #111;  
+        padding: 20px;  
+        box-sizing: border-box;  
+    }  
+    .modal-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: #fff; }  
+  
+    footer { text-align: center; padding: 20px; margin-top: 50px; border-top: 1px solid #333; color: #777; font-size: 0.9rem; }  
+  
+    @media (max-width: 600px) {  
+        h1 { font-size: 2rem; }  
+        .doc-title { font-size: 1.5rem; }  
+    }  
+</style>  
+</head>  
+<body>  
+  
+<!-- MODAL INICIAL -->  
+<div id="modal-background" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:flex;justify-content:center;align-items:center;z-index:2000;">  
+  <div id="modal-initial" style="background-color:#111;border:1px solid #333;border-radius:14px;padding:10px 20px;max-width:90%;width:420px;text-align:center;box-shadow:0 0 20px rgba(255,255,255,0.03);">  
+    <h2 style="color:#fff;font-size:1.3rem;text-align:center;margin-bottom:14px;border-bottom:1px solid #555;padding-bottom:10px;white-space:nowrap;overflow-x:auto;">  
+      La Última Página de Internet  
+    </h2>  
+  
+    <p style="color:#fff;font-size:1rem;line-height:1.7;text-align:justify;margin:0 auto 26px auto;width:100%;">  
+      <strong>He visto la red crecer y desvanecerse.</strong><br><br>  
+      Entre enlaces rotos y píxeles olvidados, guardo lo que la historia digital ha dejado atrás.<br><br>  
+      Este espacio es un reflejo de esa memoria: un recorrido silencioso por la actualidad y por lo que la web fue, aquello que nunca volverá a ser.  
+    </p>  
+  
+    <div style="text-align:center;">  
+      <button class="modal-btn btn-access" style="margin:8px 10px;padding:10px 20px;border-radius:8px;background:#2ecc71;color:#fff;border:none;font-weight:600;">Acceder</button>  
+      <button class="modal-btn btn-exit" style="margin:8px 10px;padding:10px 20px;border-radius:8px;background:#e74c3c;color:#fff;border:none;font-weight:600;">Salir</button>  
+    </div>  
+  </div>  
+</div>  
+  
+<div class="container">  
+    <div class="header-container">  
+        <h1>La Última Página de Internet</h1>  
+        <p class="intro-bold">Bienvenido al final del recorrido digital.</p>  
+        <p class="intro-grey">Un espacio que refleja la realidad actual de Internet.</p>  
+    </div>  
+  
+    <div class="content-title">Memorias de la red</div>  
+  
+    <div class="doc-section">  
+        <div class="doc-title">El Espejo del Olvido</div>  
+        <div class="doc-desc">Reflejos del pasado digital que invitan a la introspección.</div>  
+        <button class="btn" data-doc="doc1.html">Abrir documento</button>  
+    </div>  
+  
+    <div class="doc-section">  
+        <div class="doc-title">Zona de Susurros</div>  
+        <div class="doc-desc">Mensajes efímeros y secretos que solo existen en el silencio digital.</div>  
+        <button class="btn" data-doc="doc2.html">Abrir documento</button>  
+    </div>  
+  
+    <div class="doc-section">  
+        <div class="doc-title">Caminos que Nunca Existieron</div>  
+        <div class="doc-desc">Enlaces que llevan al vacío, recordando la ilusión de la elección.</div>  
+        <button class="btn" data-doc="doc3.html">Abrir documento</button>  
+    </div>  
+  
+    <div class="doc-section">  
+        <div class="doc-title">Archivo de la Desconexión</div>  
+        <div class="doc-desc">Fragmentos perdidos de sitios antiguos que evocan nostalgia digital.</div>  
+        <button class="btn" data-doc="doc4.html">Abrir documento</button>  
+    </div>  
+  
+    <div class="doc-section">  
+        <div class="doc-title">El Último Pixel</div>  
+        <div class="doc-desc">La web se desvanece hasta quedarse en un único pixel, símbolo de la impermanencia.</div>  
+        <button class="btn" data-doc="doc5.html">Abrir documento</button>  
+    </div>  
+</div>  
+  
+<!-- MODAL DE DOCUMENTOS -->  
+<div class="modal" id="modal">  
+  <div class="modal-content">  
+      <span class="modal-close" id="modal-close">&times;</span>  
+      <iframe id="modal-iframe" src=""></iframe>  
+  </div>  
+</div>  
+  
+<footer>© NEXUS Código</footer>  
+  
+<script>  
+    const modalBg = document.getElementById('modal-background');  
+    const accessBtn = document.querySelector('.btn-access');  
+    const exitBtn = document.querySelector('.btn-exit');  
+  
+    accessBtn.addEventListener('click', () => {  
+        modalBg.style.transition = 'opacity 0.5s ease';  
+        modalBg.style.opacity = '0';  
+        setTimeout(() => { modalBg.style.display = 'none'; }, 500);  
+    });  
+  
+    exitBtn.addEventListener('click', () => {  
+        document.body.innerHTML = '';  
+        document.body.style.backgroundColor = '#000';  
+        document.body.style.overflow = 'hidden';  
+    });  
+  
+    const modal = document.getElementById('modal');  
+    const modalIframe = document.getElementById('modal-iframe');  
+    const btns = document.querySelectorAll('.btn');  
+    const modalClose = document.getElementById('modal-close');  
+  
+    btns.forEach(btn => {  
+        btn.addEventListener('click', () => {  
+            const doc = btn.getAttribute('data-doc');  
+            modalIframe.src = doc;  
+            modal.style.display = 'flex';  
+        });  
+    });  
+  
+    modalClose.addEventListener('click', () => {  
+        modal.style.display = 'none';  
+        modalIframe.src = '';  
+    });  
+  
+    window.addEventListener('click', (e) => {  
+        if(e.target === modal) {  
+            modal.style.display = 'none';  
+            modalIframe.src = '';  
+        }  
+    });  
+</script>  
+  
+</body>  
 </html>
