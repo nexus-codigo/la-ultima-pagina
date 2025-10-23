@@ -1,312 +1,1482 @@
-<!DOCTYPE html>  
-<html lang="es">  
-<head>  
-<meta charset="UTF-8">  
-<meta name="viewport" content="width=device-width, initial-scale=1.0">  
-<title>La Última Página de Internet</title>  
-<style>  
-    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }  
-    body { background-color: #0b0b0b; color: #f5f5f5; line-height: 1.6; }  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>La Última Página de Internet</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin:0; padding:0; width:100%; overflow-x:hidden !important; font-family:'Inter',sans-serif; background:#0a0a0a; color:#f0f0f0; line-height:1.6; }
+  body { position: relative; }
   
-    .container { max-width: 900px; margin: 30px auto; padding: 0 20px; }  
-  
-    .header-container { text-align: left; margin-bottom: 20px; }  
-    .header-container h1 {  
-        font-size: clamp(1.5rem, 6vw, 3rem);  
-        font-weight: 800;  
-        background: linear-gradient(90deg, #8e2de2, #4a00e0);  
-        -webkit-background-clip: text;  
-        -webkit-text-fill-color: transparent;  
-        white-space: nowrap;  
-        overflow-x: auto;  
-        margin-bottom: 10px;  
-    }  
-    .header-container .intro-bold {  
-        font-size: clamp(1rem, 4vw, 1.2rem);  
-        font-weight: 700;  
-        color: #fff;  
-        white-space: nowrap;  
-        overflow-x: auto;  
-        margin-bottom: 5px;  
-    }  
-    .header-container .intro-grey {  
-        font-size: 1rem;  
-        color: #777;  
-        margin-bottom: 10px;  
-    }  
-  
-    .content-title {  
-        text-align: center;  
-        font-size: 2rem;  
-        font-weight: 700;  
-        margin-top: 0;  
-        margin-bottom: 30px;  
-        background: linear-gradient(90deg, #8e2de2, #4a00e0);  
-        -webkit-background-clip: text;  
-        -webkit-text-fill-color: transparent;  
-    }  
-  
-    .doc-section { margin-bottom: 40px; padding: 20px; border: 1px solid #333; border-radius: 8px; transition: transform 0.3s; }  
-    .doc-section:hover { transform: scale(1.02); }  
-    .doc-title { font-size: 1.8rem; margin-bottom: 10px; color: #fff; }  
-    .doc-desc { margin-bottom: 15px; color: #aaa; }  
-    .btn { padding: 10px 20px; background-color: #1e1e1e; color: #fff; border: none; border-radius: 5px; cursor: pointer; transition: background 0.3s; }  
-    .btn:hover { background-color: #444; }  
-  
-    .modal {  
-        display: none;  
-        position: fixed;  
-        top: 0; left: 0;  
-        width: 100%; height: 100%;  
-        background: rgba(0,0,0,0.85);  
-        justify-content: center;  
-        align-items: center;  
-        z-index: 1000;  
-    }  
+  header { text-align:left; padding:25px 15px 10px; }
+  .title-container { display: flex; align-items: baseline; gap: 5px; flex-wrap: wrap; }
+  header h1 { font-size:1.85em; font-weight:900; color:#fff; letter-spacing:1px; margin:0; font-family:'Arial Black',Arial,sans-serif; }
+  header h2 { font-size:1.5em; color:#bcbcbc; font-weight:900; margin:0; font-family:'Arial Black',Arial,sans-serif; }
+  header p { font-size:0.9em; color:#bcbcbc; margin:8px 0 0; max-width:90%; }
 
-    /* --- CORRECCIÓN: modal con contenido insertado (sin iframe) --- */
-    .modal-content {  
-        background-color: #111;  
-        border-radius: 12px;  
-        width: 95%;  
-        height: 95%;  
-        max-width: 1200px;  
-        max-height: 90vh;  
-        position: relative;  
-        color: #f5f5f5;  
-        display: flex;  
-        flex-direction: column;  
-        overflow: hidden;  
-        box-shadow: 0 0 25px rgba(0,0,0,0.5);  
-    }  
+  main { max-width:900px; width:100%; margin:0 auto; padding:5px 10px; text-align:center; overflow-x:hidden; }
 
-    /* contenedor donde inyectamos el HTML del documento */
-    .modal-document {  
-        flex: 1;  
-        width: 100%;  
-        height: 100%;  
-        overflow: auto;  
-        padding: 36px; /* espacio interior para lectura */  
-        box-sizing: border-box;  
-        background: #111;  
-        color: #f5f5f5;  
-        font-size: 18px;  
-        line-height: 1.8;  
-        text-align: justify;  
+  section.legend { margin:20px 0; padding:0 10px; }
+  section.legend h2 { font-size:1.25em; font-weight:700; color:#fff; margin-bottom:8px; white-space:normal; overflow:visible; }
+  section.legend p { font-size:0.85em; color:#b0b0b0; margin:0 auto; max-width:100%; white-space:normal; overflow:visible; }
+
+  .sections { display:flex; flex-direction:column; gap:25px; margin-top:25px; width:100%; padding:0 10px; }
+  .section { border-top:1px solid #c39c78; padding-top:15px; }
+  .section h3 { font-size:1.05em; color:#fff; font-weight:600; margin-bottom:6px; }
+  .section p { font-size:0.88em; color:#b0b0b0; max-width:100%; margin:0 auto; line-height:1.4em; }
+  .section .redes p { margin: 0; line-height:1.4em; }
+  .bold { font-weight:700; display:block; }
+  .italic { font-style:italic; display:block; }
+.highlight { 
+    color: #f5f5dc; 
+    font-weight: 700; 
+    display: block; 
+    margin-top: 4px; 
+    font-size: 0.85em; 
+    text-align: center !important;
+    }
+  
+  .social-icons { width:180px; height:auto; margin:8px auto; display:block; }
+  
+  .btn { 
+    display:inline-block; 
+    margin-top:30px; 
+    padding:12px 30px; 
+    border:1px solid #c39c78;
+    background: #c39c78;
+    color:#0a0a0a;
+    text-decoration:none; 
+    border-radius:30px; 
+    font-weight: 700;
+    transition: all 0.3s ease; 
+    white-space:nowrap; 
+    cursor: pointer;
+  }
+  .btn:hover { 
+    background-color:#d4af37;
+    border-color: #d4af37;
+    color:#0a0a0a;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(195, 156, 120, 0.3);
+  }
+
+  .play-btn {
+    background: #b8860b !important;
+    border-color: #b8860b !important;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .play-btn::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(45deg, #ffd700, #b8860b, #daa520, #b8860b);
+    border-radius: 32px;
+    z-index: -1;
+    opacity: 0.7;
+    animation: aura 3s ease-in-out infinite;
+  }
+
+  @keyframes aura {
+    0%, 100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.8;
+      transform: scale(1.02);
+    }
+  }
+
+  .play-btn.playing {
+    background: #daa520 !important;
+    border-color: #daa520 !important;
+  }
+
+  .play-btn.playing::before {
+    animation: aura 1.5s ease-in-out infinite;
+  }
+  
+  .verification-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    z-index: 5000;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+
+  .verification-content {
+    background: #1a1a1a;
+    border-radius: 10px;
+    width: 100%;
+    max-width: 700px;
+    padding: 30px 40px;
+    border-left: 5px solid #c39c78;
+    box-shadow: 0 0 30px rgba(255,215,0,0.2);
+    overflow: hidden;
+    text-align: center;
+  }
+
+  .verification-header {
+    margin-bottom: 25px;
+    border-bottom: 2px solid #c39c78;
+    padding-bottom: 10px;
+  }
+
+  .verification-title {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 5px;
+  }
+
+  .verification-subtitle {
+    font-size: 1.1rem;
+    color: #c39c78;
+  }
+
+  .verification-body {
+    margin-top: 20px;
+  }
+
+  .verification-instruction {
+    font-size: 1.1rem;
+    color: #e0e0e0;
+    margin-bottom: 20px;
+    line-height: 1.5;
+  }
+
+  .email-container {
+    background: #252525;
+    padding: 15px 20px;
+    border-radius: 6px;
+    border: 1px solid #333;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow-x: auto;
+  }
+
+  .email {
+    color: #ffd700;
+    font-size: 1.2rem;
+    white-space: nowrap;
+    text-align: center;
+  }
+
+  .requirements {
+    padding: 0;
+    margin-bottom: 25px;
+  }
+
+  .requirement-item {
+    color: #c39c78;
+    font-size: 1rem;
+    margin: 10px 0;
+    line-height: 1.4;
+    text-align: left;
+    padding-left: 20px;
+    position: relative;
+  }
+
+  .requirement-item:before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #c39c78;
+  }
+
+  .note {
+    color: #b0b0b0;
+    font-size: 0.95rem;
+    font-style: italic;
+    line-height: 1.4;
+    margin-bottom: 20px;
+  }
+
+  .verification-footer {
+    margin-top: 20px;
+  }
+
+  .footer-text {
+    color: #9a9a9a;
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+  }
+
+  .footer-text strong {
+    color: #fff;
+  }
+
+  .btn-accept {
+    background: #c39c78;
+    color: #1a1a1a;
+    font-weight: 600;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s ease;
+  }
+
+  .btn-accept:hover {
+    background: #ffd700;
+    color: #000;
+  }
+
+  @media (max-width: 768px) {
+    .verification-content {
+      padding: 20px 25px;
     }
 
-    /* Forzar uso total del ancho y limpiar estilos problemáticos de documentos inyectados */
-    .modal-document * {  
-        max-width: none !important;  
-        width: auto !important;  
-        margin-left: 0 !important;  
-        margin-right: 0 !important;  
-        box-sizing: border-box !important;  
+    .verification-title {
+      font-size: 1.6rem;
     }
 
-    .modal-document p {  
-        text-align: justify !important;  
-        color: #ddd !important;  
-        margin-bottom: 1.2em !important;  
+    .verification-subtitle {
+      font-size: 1rem;
     }
 
-    .modal-document h2 {  
-        text-align: center !important;  
-        color: #fff !important;  
-        margin-bottom: 0.6em !important;  
-        font-size: 1.8rem !important;  
+    .email {
+      font-size: 1rem;
+    }
+  }
+
+footer { 
+    text-align:left; 
+    padding:20px 15px; 
+    font-size:0.85em; 
+    color:#9a9a9a; 
+    width:100%; 
+    overflow-x:hidden; 
+    position: relative;
+    background: #0a0a0a;
+    border-top: 2px solid #ffd700;
+    transition: all 0.5s ease;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #ffd700, transparent);
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+footer.neon-effect::before {
+    opacity: 1;
+    animation: neonSlide 3s linear infinite;
+}
+
+footer.neon-effect strong {
+    color: #ffd700;
+    text-shadow: 
+      0 0 5px #ffd700,
+      0 0 10px #ffd700,
+      0 0 20px #ffd700,
+      0 0 40px #ffb347;
+    animation: neonFlicker 2s infinite alternate;
+}
+
+.data-corruption {
+  animation: glitch 0.3s infinite;
+  filter: hue-rotate(90deg);
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.shutdown-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 9999;
+  display: none;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: #8B0000;
+  font-family: 'Courier New', monospace;
+  font-size: 1.5rem;
+  text-align: center;
+}
+
+.shutdown-text {
+  animation: terminal-blink 1s infinite;
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+@keyframes terminal-blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
+.typing-effect {
+  overflow: hidden;
+  border-right: 2px solid #8B0000;
+  white-space: nowrap;
+  margin: 0 auto;
+  animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from { width: 0 }
+  to { width: 100% }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: #8B0000 }
+}
+
+@keyframes neonSlide {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+@keyframes neonFlicker {
+    0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+      text-shadow: 
+        0 0 5px #ffd700,
+        0 0 10px #ffd700,
+        0 0 20px #ffd700,
+        0 0 40px #ffb347;
+    }
+    20%, 24%, 55% {
+      text-shadow: none;
+    }
+}
+
+  footer strong { 
+    color:#fff; 
+    font-weight:700; 
+    transition: all 0.5s ease;
+  }
+
+  .gallery-section {
+    max-width: 900px;
+    margin: 40px auto 20px;
+    text-align: center;
+    padding: 0 10px;
+  }
+
+  .gallery-title {
+    color: #c39c78;
+    margin-bottom: 25px;
+    font-size: 1.5em;
+  }
+
+  .zoom-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+  }
+
+  .zoom-gallery img {
+    width: 80px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #c39c78;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .zoom-gallery img:hover {
+    transform: scale(1.05);
+    border-color: #d4af37;
+  }
+
+  .gallery-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.98);
+    z-index: 6000;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .modal-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .image-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    max-width: 100%;
+  }
+
+  .modal-image {
+    max-width: 350px;
+    max-height: 600px;
+    border-radius: 15px;
+    border: 3px solid #c39c78;
+    box-shadow: 0 20px 60px rgba(195, 156, 120, 0.3);
+    object-fit: contain;
+  }
+
+  .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(195, 156, 120, 0.9);
+    border: none;
+    color: #000;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 6002;
+  }
+
+  .nav-btn:hover {
+    background: #d4af37;
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  .prev-btn {
+    left: 20px;
+  }
+
+  .next-btn {
+    right: 20px;
+  }
+
+  .image-counter {
+    position: absolute;
+    top: 20px;
+    background: rgba(195, 156, 120, 0.9);
+    color: #000;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 0.9em;
+    z-index: 6001;
+  }
+
+  .exit-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: rgba(195, 156, 120, 0.9);
+    border: none;
+    color: #000;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 6001;
+  }
+
+  .exit-btn:hover {
+    background: #d4af37;
+    transform: scale(1.05);
+  }
+
+  .thumbnail-strip {
+    display: flex;
+    gap: 12px;
+    padding: 20px;
+    background: rgba(26, 26, 26, 0.9);
+    border-radius: 15px;
+    border: 1px solid #c39c78;
+    margin-top: 20px;
+  }
+
+  .thumbnail {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    opacity: 0.6;
+  }
+
+  .thumbnail:hover {
+    opacity: 0.8;
+    transform: scale(1.1);
+  }
+
+  .thumbnail.active {
+    border-color: #c39c78;
+    opacity: 1;
+    transform: scale(1.15);
+  }
+
+  .fade-in {
+    animation: fadeIn 0.4s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  @media (max-width: 768px) {
+    .zoom-gallery {
+      gap: 12px;
+    }
+    
+    .zoom-gallery img {
+      width: 75px;
+      height: 130px;
+    }
+    
+    .nav-btn {
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+    }
+    
+    .prev-btn {
+      left: 10px;
+    }
+    
+    .next-btn {
+      right: 10px;
+    }
+    
+    .modal-image {
+      max-width: 280px;
+      max-height: 500px;
+    }
+    
+    .thumbnail-strip {
+      padding: 15px;
+      gap: 8px;
+    }
+    
+    .thumbnail {
+      width: 35px;
+      height: 35px;
+    }
+    
+    .image-counter {
+      top: 10px;
+      font-size: 0.8em;
+      padding: 6px 15px;
     }
 
-    .modal-document .subtitle {  
-        text-align: center !important;  
-        color: #aaa !important;  
-        margin-bottom: 1.2em !important;  
-        font-style: italic !important;  
+    .exit-btn {
+      top: 10px;
+      right: 10px;
+      padding: 8px 16px;
+      font-size: 0.9em;
     }
+  }
 
-    .modal-document img {  
-        max-width: 100% !important;  
-        height: auto !important;  
-        display: block !important;  
-        margin: 0 auto !important;  
+  @media (max-width: 480px) {
+    .zoom-gallery {
+      gap: 10px;
     }
-
-    .modal-close {  
-        position: absolute;  
-        top: 10px;  
-        right: 15px;  
-        font-size: 1.5rem;  
-        cursor: pointer;  
-        color: #fff;  
-        z-index: 2;  
-    }  
-  
-    footer { text-align: center; padding: 20px; margin-top: 50px; border-top: 1px solid #333; color: #777; font-size: 0.9rem; }  
-  
-    @media (max-width: 600px) {  
-        h1 { font-size: 2rem; }  
-        .doc-title { font-size: 1.5rem; }  
-        .modal-document { padding: 20px; font-size: 16px; }  
-    }  
-</style>  
-</head>  
-<body>  
-  
-<!-- MODAL INICIAL -->  
-<div id="modal-background" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.95);display:flex;justify-content:center;align-items:center;z-index:2000;">  
-  <div id="modal-initial" style="background-color:#111;border:1px solid #333;border-radius:14px;padding:10px 20px;max-width:90%;width:420px;text-align:center;box-shadow:0 0 20px rgba(255,255,255,0.03);">  
-    <h2 style="color:#fff;font-size:1.3rem;text-align:center;margin-bottom:14px;border-bottom:1px solid #555;padding-bottom:10px;white-space:nowrap;overflow-x:auto;">  
-      La Última Página de Internet  
-    </h2>  
-  
-    <p style="color:#fff;font-size:1rem;line-height:1.7;text-align:justify;margin:0 auto 26px auto;width:100%;">  
-      <strong>He visto la red crecer y desvanecerse.</strong><br><br>  
-      Entre enlaces rotos y píxeles olvidados, guardo lo que la historia digital ha dejado atrás.<br><br>  
-      Este espacio es un reflejo de esa memoria: un recorrido silencioso por la actualidad y por lo que la web fue, aquello que nunca volverá a ser.  
-    </p>  
-  
-    <div style="text-align:center;">  
-      <button class="modal-btn btn-access" style="margin:8px 10px;padding:10px 20px;border-radius:8px;background:#2ecc71;color:#fff;border:none;font-weight:600;">Acceder</button>  
-      <button class="modal-btn btn-exit" style="margin:8px 10px;padding:10px 20px;border-radius:8px;background:#e74c3c;color:#fff;border:none;font-weight:600;">Salir</button>  
-    </div>  
-  </div>  
-</div>  
-  
-<div class="container">  
-    <div class="header-container">  
-        <h1>La Última Página de Internet</h1>  
-        <p class="intro-bold">Bienvenido al final del recorrido digital.</p>  
-        <p class="intro-grey">Un espacio que refleja la realidad actual de Internet.</p>  
-    </div>  
-  
-    <div class="content-title">Memorias de la red</div>  
-  
-    <div class="doc-section">  
-        <div class="doc-title">El Espejo del Olvido</div>  
-        <div class="doc-desc">Reflejos del pasado digital que invitan a la introspección.</div>  
-        <button class="btn" data-doc="doc1.html">Abrir documento</button>  
-    </div>  
-  
-    <div class="doc-section">  
-        <div class="doc-title">Zona de Susurros</div>  
-        <div class="doc-desc">Mensajes efímeros y secretos que solo existen en el silencio digital.</div>  
-        <button class="btn" data-doc="doc2.html">Abrir documento</button>  
-    </div>  
-  
-    <div class="doc-section">  
-        <div class="doc-title">Caminos que Nunca Existieron</div>  
-        <div class="doc-desc">Enlaces que llevan al vacío, recordando la ilusión de la elección.</div>  
-        <button class="btn" data-doc="doc3.html">Abrir documento</button>  
-    </div>  
-  
-    <div class="doc-section">  
-        <div class="doc-title">Archivo de la Desconexión</div>  
-        <div class="doc-desc">Fragmentos perdidos de sitios antiguos que evocan nostalgia digital.</div>  
-        <button class="btn" data-doc="doc4.html">Abrir documento</button>  
-    </div>  
-  
-    <div class="doc-section">  
-        <div class="doc-title">El Último Pixel</div>  
-        <div class="doc-desc">La web se desvanece hasta quedarse en un único pixel, símbolo de la impermanencia.</div>  
-        <button class="btn" data-doc="doc5.html">Abrir documento</button>  
-    </div>  
-</div>  
-  
-<!-- MODAL DE DOCUMENTOS: ahora inyectamos contenido en .modal-document en vez de iframe -->  
-<div class="modal" id="modal">  
-  <div class="modal-content">  
-      <span class="modal-close" id="modal-close" aria-label="Cerrar">&times;</span>  
-      <div id="modal-document" class="modal-document" role="document" aria-live="polite"></div>  
-  </div>  
-</div>  
-  
-<footer>© NEXUS Código</footer>  
-  
-<script>  
-    // Modal inicial (sin cambios funcionales)
-    const modalBg = document.getElementById('modal-background');  
-    const accessBtn = document.querySelector('.btn-access');  
-    const exitBtn = document.querySelector('.btn-exit');  
-
-    accessBtn.addEventListener('click', () => {  
-        modalBg.style.transition = 'opacity 0.5s ease';  
-        modalBg.style.opacity = '0';  
-        setTimeout(() => { modalBg.style.display = 'none'; }, 500);  
-    });  
-
-    exitBtn.addEventListener('click', () => {  
-        document.body.innerHTML = '';  
-        document.body.style.backgroundColor = '#000';  
-        document.body.style.overflow = 'hidden';  
-    });  
-
-    // Nuevo comportamiento del modal: carga el HTML del doc y lo inyecta
-    const modal = document.getElementById('modal');  
-    const modalDocument = document.getElementById('modal-document');  
-    const docButtons = document.querySelectorAll('[data-doc]');  
-    const modalClose = document.getElementById('modal-close');  
-
-    async function loadDocumentIntoModal(url) {
-        try {
-            const res = await fetch(url, { cache: 'no-store' });
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const htmlText = await res.text();
-            const parser = new DOMParser();
-            const parsed = parser.parseFromString(htmlText, 'text/html');
-
-            // Extraer contenido del body (si existe) o usar todo el texto
-            const content = parsed.body ? parsed.body.innerHTML : htmlText;
-
-            // Inyectar
-            modalDocument.innerHTML = content;
-
-            // Limpiar estilos inline que provoquen centrado/anchos restringidos
-            modalDocument.querySelectorAll('[style]').forEach(el => el.removeAttribute('style'));
-            modalDocument.querySelectorAll('[width]').forEach(el => el.removeAttribute('width'));
-
-            // Forzar lectura desde arriba
-            modalDocument.scrollTop = 0;
-
-            // Mostrar modal
-            modal.style.display = 'flex';
-            // foco accesible
-            modalClose.focus();
-        } catch (err) {
-            console.error('Error cargando documento:', err);
-            modalDocument.innerHTML = '<p style="color:#f5f5f5;padding:20px;">Error al cargar el documento.</p>';
-            modal.style.display = 'flex';
-        }
+    
+    .zoom-gallery img {
+      width: 70px;
+      height: 120px;
     }
+    
+    .modal-image {
+      max-width: 250px;
+      max-height: 450px;
+    }
+    
+    .thumbnail-strip {
+      padding: 12px;
+      gap: 6px;
+    }
+    
+    .thumbnail {
+      width: 30px;
+      height: 30px;
+    }
+  }
 
-    docButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            const doc = btn.getAttribute('data-doc');
-            if (!doc) return;
-            loadDocumentIntoModal(doc);
-        });
+  .donation-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 5000;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .donation-content {
+    background: #1a1a1a;
+    padding: 25px 30px;
+    border-radius: 10px;
+    border: 1px solid #c39c78;
+    max-width: 600px;
+    width: 95%;
+    text-align: center;
+    position: relative;
+  }
+
+  .donation-tabs {
+    display: flex;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #333;
+  }
+
+  .tab {
+    flex: 1;
+    padding: 12px;
+    background: #2a2a2a;
+    border: none;
+    color: #ccc;
+    cursor: pointer;
+    font-weight: bold;
+    font-family: inherit;
+    font-size: 0.9em;
+    white-space: nowrap;
+  }
+
+  .tab.active {
+    background: #c39c78;
+    color: #000;
+  }
+
+  .tab-content {
+    display: none;
+    padding: 15px 0;
+    text-align: left;
+    min-height: 280px;
+  }
+
+  .tab-content.active {
+    display: block;
+  }
+
+  .paypal-btn {
+    background: #0070ba;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    font-size: 0.95em;
+    cursor: pointer;
+    margin: 10px 0;
+    text-decoration: none;
+    display: inline-block;
+    font-family: inherit;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+
+  .email-form input, .email-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 6px 0;
+    border: 1px solid #c39c78;
+    border-radius: 5px;
+    background: #2a2a2a;
+    color: white;
+    font-family: inherit;
+  }
+
+  .email-form button {
+    background: #c39c78;
+    color: #000;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 8px;
+    font-family: inherit;
+    width: 100%;
+  }
+
+  .success-message {
+    color: #4CAF50;
+    display: none;
+    text-align: center;
+    margin-top: 15px;
+  }
+
+  .instructions {
+    background: #2a2a2a;
+    padding: 12px;
+    border-radius: 5px;
+    margin: 12px 0;
+    font-size: 0.85em;
+    text-align: left;
+  }
+
+  .close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 1.3em;
+    cursor: pointer;
+  }
+
+  .modal-text {
+    text-align: left;
+    margin: 8px 0;
+    line-height: 1.4;
+  }
+
+  .about-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.95);
+    z-index: 5000;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .about-content {
+    background: #1a1a1a;
+    padding: 30px;
+    border-radius: 10px;
+    border: 1px solid #c39c78;
+    max-width: 700px;
+    width: 99%;
+    text-align: center;
+    position: relative;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .about-footer {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #333;
+    font-size: 0.8em;
+    text-align: left;
+  }
+
+  .about-footer .copyright {
+    color: #9a9a9a;
+    margin-bottom: 10px;
+  }
+
+  .about-footer .contact-link {
+    color: #c39c78;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    display: inline-block;
+  }
+
+  .about-footer .contact-link:hover {
+    color: #d4af37;
+    text-decoration: underline;
+  }
+
+  .quote-box {
+    margin: 20px 0;
+    padding: 15px;
+    background: #2a2a2a;
+    border-radius: 8px;
+    border-left: 3px solid #c39c78;
+  }
+
+  .quote-box p {
+    color: #c39c78;
+    font-style: italic;
+    margin: 0;
+    font-size: 0.95em;
+  }
+
+  .about-list {
+    text-align: left;
+    color: #b0b0b0;
+    line-height: 1.6;
+    margin: 15px 0;
+    padding-left: 20px;
+  }
+
+  .about-list li {
+    margin-bottom: 8px;
+  }
+
+  .signature {
+    text-align: center;
+    margin: 25px 0;
+    padding: 15px;
+    background: #1a1a1a;
+    border-radius: 20px;
+    border: 1px solid #c39c78;
+  }
+
+  .signature small {
+    color: #9a9a9a;
+    font-style: italic;
+  }
+
+  .note-box {
+    font-size: 0.9em;
+    color: #9a9a9a;
+    border-top: 1px solid #333;
+    padding-top: 15px;
+    margin-top: 20px;
+  }
+
+  h3.subtitle {
+    color: #c39c78;
+    margin-top: 25px;
+    margin-bottom: 15px;
+    font-size: 1.1em;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .footer-left {
+    text-align: left;
+  }
+
+  .footer-right {
+    text-align: right;
+  }
+
+  .about-link {
+    color: #c39c78;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: color 0.3s ease;
+    white-space: nowrap;
+  }
+
+  .about-link:hover {
+    color: #d4af37;
+    text-decoration: underline;
+  }
+
+  @media(max-width:768px){
+    header { padding:20px 15px 8px; }
+    header h1 { font-size:1.6em; }
+    header h2 { font-size:1.3em; }
+    section.legend { margin:15px 0; }
+    section.legend h2 { font-size:1.1em; }
+    section.legend p { font-size:0.8em; }
+    .section h3 { font-size:0.95em; }
+    .btn { width:85%; max-width:280px; margin-top:25px; }
+    footer { padding:15px 15px; font-size:0.8em; }
+    .social-icons { width:140px; }
+    .donation-content { 
+      padding: 20px; 
+      max-width: 550px;
+      width: 95%;
+    }
+    .gallery-title { font-size: 1.3em; }
+    .tab-content {
+      min-height: 260px;
+    }
+  }
+
+  @media(max-width:480px){
+    header { padding:15px 15px 5px; }
+    header h1 { font-size:1.45em; }
+    header h2 { font-size:1.2em; }
+    section.legend { margin:12px 0; }
+    section.legend h2 { font-size:1em; }
+    .section h3 { font-size:0.9em; }
+    .btn { width:90%; max-width:260px; margin-top:20px; }
+    .social-icons { width:120px; }
+    .donation-content { 
+      padding: 15px; 
+      max-width: 500px;
+      width: 95%;
+    }
+    .gallery-title { font-size: 1.2em; }
+    .tab-content {
+      min-height: 240px;
+    }
+    .about-content {
+      padding: 20px;
+    }
+    .footer-content {
+      flex-direction: column;
+      text-align: left;
+      gap: 10px;
+    }
+    .footer-left, .footer-right {
+      text-align: left;
+      width: 100%;
+    }
+    .footer-right {
+      margin-top: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="title-container">
+    <h1>La Última Página</h1>
+    <h2>de Internet</h2>
+  </div>
+  <p>Un espacio de reflexión sobre la memoria digital, la desconexión y el eco del pasado en la red.</p>
+</header>
+
+<main>
+  <section class="legend">
+    <h2>Los Documentos de la Destrucción</h2>
+    <p>Fragmentos perdidos de una red que alguna vez fue humana. Ecos digitales que aún respiran entre el ruido.</p>
+  </section>
+
+  <div class="sections">
+    <div class="section">
+      <h3>El Espejo del Olvido</h3>
+      <p>Memorias borradas, rostros difusos, archivos que ya no existen. Un reflejo de lo que fuimos antes de desaparecer entre algoritmos.</p>
+    </div>
+
+    <div class="section">
+      <h3>Zona de Susurros</h3>
+      <p>Conversaciones que flotan en servidores abandonados. Ecos de usuarios que alguna vez creyeron ser escuchados.</p>
+    </div>
+
+    <div class="section">
+      <h3>Caminos que Nunca Existieron</h3>
+      <p>Direcciones rotas, enlaces muertos y portales sin retorno. Huellas digitales hacia ningún lugar.</p>
+    </div>
+
+    <div class="section">
+      <h3>Archivo de la Desconexión</h3>
+      <p>Los registros del silencio. Un catálogo de la ausencia y del final de la conexión humana.</p>
+    </div>
+
+    <div class="section">
+      <h3>El Último Pixel</h3>
+      <p>El punto final de la red. Donde la imagen se apaga, el ruido cesa y la nada digital se convierte en todo.</p>
+    </div>
+
+    <div class="section redes">
+      <h3>Redes del Silencio</h3>
+      <p class="bold">Apps convertidas en la decadencia de la atención</p>
+      <p class="italic">hiperconexión sin presencia:</p>
+      <img src="iconos.png" alt="Iconos de redes sociales" class="social-icons">
+      <p class="highlight">La interacción perdida en la nada digital</p>
+    </div>
+  </div>
+
+  <section class="gallery-section">
+    <div class="zoom-gallery">
+      <img src="img1.png" alt="Interfaz Principal" data-index="0">
+      <img src="img2.png" alt="Menú Documentos" data-index="1">
+      <img src="img3.png" alt="Archivos Digitales" data-index="2">
+      <img src="img4.png" alt="Navegación Avanzada" data-index="3">
+    </div>
+  </section>
+
+  <button class="btn play-btn" onclick="toggleAudio()">Reproducir</button>
+
+  <a href="javascript:void(0)" class="btn" onclick="openDonationModal()">Descargar APP</a>
+</main>
+
+<footer id="mainFooter">
+  <div class="footer-content">
+    <div class="footer-left">
+      <p><strong>© NEXUS Código</strong><br>Guardianes de la Memoria Digital</p>
+    </div>
+    <div class="footer-right">
+      <a class="about-link" onclick="openAboutModal()">Acerca de</a>
+    </div>
+  </div>
+</footer>
+
+<div id="aboutModal" class="about-modal">
+  <div class="about-content">
+    <button class="close-modal" onclick="closeAboutModal()">&times;</button>
+    
+    <h2>ACERCA DE ESTE ESPACIO</h2>
+    
+    <div class="modal-text">
+      <p><strong>La Última Página de Internet</strong> es un proyecto de arqueología digital que explora los límites de la memoria en la red.</p>
+      
+      <div class="quote-box">
+        <p>"En el océano infinito de datos, algunas páginas se convierten en lápidas digitales"</p>
+      </div>
+
+      <h3 class="subtitle">¿QUÉ ENCONTRARÁS AQUÍ?</h3>
+      <ul class="about-list">
+        <li>Ecos de conversaciones perdidas en servidores abandonados</li>
+        <li>Fragmentos de identidades digitales olvidadas</li>
+        <li>El rastro de lo humano en lo algorítmico</li>
+        <li>La poesía del silencio en la hiperconexión</li>
+        <li>Archivos de lo que la red decidió olvidar</li>
+      </ul>
+
+      <h3 class="subtitle">EL PROYECTO NEXUS Código</h3>
+      <p>Somos <strong>guardianes de la memoria digital</strong>, archivistas de lo que la red pretende olvidar. Recopilamos, preservamos y honramos los vestigios de la presencia humana en espacios digitales abandonados.</p>
+
+      <p>Nuestro trabajo no es sobre la tecnología, sino sobre lo humano que queda atrapado en ella. Cada fragmento, cada eco, cada susurro digital cuenta una historia que merece ser recordada.</p>
+
+      <div class="signature">
+        <small>"No somos dueños del pasado, sino sus custodios temporales"</small>
+      </div>
+
+      <div class="note-box">
+        <p><strong>Nota:</strong> Este espacio se actualiza cíclicamente, como la memoria misma. Algunos fragmentos pueden cambiar, otros desaparecer, siguiendo el ritmo natural del olvido digital.</p>
+      </div>
+    </div>
+
+    <div class="about-footer">
+  <div class="copyright">
+    <strong>© NEXUS Código</strong><br>Guardianes de la Memoria Digital
+  </div>
+  <div class="contact">
+  <strong>Contacto:</strong> nexus.codigo.access@gmail.com
+</div>
+</div>
+  </div>
+</div>
+
+<div id="galleryModal" class="gallery-modal">
+  <div class="modal-container">
+    <div class="image-counter" id="imageCounter">1 / 4</div>
+    <button class="exit-btn" onclick="closeGallery()">Salir</button>
+    <div class="image-container">
+      <button class="nav-btn prev-btn" onclick="prevImage()">‹</button>
+      
+      <img id="modalImage" class="modal-image fade-in" src="" alt="Imagen ampliada">
+      
+      <button class="nav-btn next-btn" onclick="nextImage()">›</button>
+    </div>
+    
+    <div class="thumbnail-strip" id="thumbnailStrip">
+    </div>
+  </div>
+</div>
+
+<div id="donationModal" class="donation-modal">
+  <div class="donation-content">
+    <button class="close-modal" onclick="closeDonationModal()">&times;</button>
+    
+    <h2>Acceso Premium</h2>
+    <p class="modal-text" style="text-align: center;">Tendrás acceso completo a la aplicación</p>
+    
+    <div class="donation-tabs">
+      <button class="tab active" onclick="switchTab('donate')">1. Donar</button>
+      <button class="tab" onclick="switchTab('verify')">2. Verificar</button>
+    </div>
+    
+    <div id="donate-tab" class="tab-content active">
+      <div class="instructions">
+        <p><strong>Instrucciones:</strong></p>
+        <p>1. Haz clic en el botón PayPal</p>
+        <p>2. Completa tu donación de $50 USD</p>
+        <p>3. Regresa aquí y ve a la sección "Verificar"</p>
+      </div>
+      
+      <div style="text-align: center;">
+        <a href="https://www.paypal.com/paypalme/NEXUSCodigo/50USD" 
+           class="paypal-btn" 
+           target="_blank"
+           onclick="markDonationStarted()">
+          Donar $50 USD via PayPal
+        </a>
+      </div>
+    <p style="text-align: center; font-style: italic;"><small>Te contactaremos por email para enviarte la APP.</small></p>
+    </div>
+    
+    <div id="verify-tab" class="tab-content">
+      <p class="modal-text">¿Ya donaste? Completa tus datos:</p>
+      
+      <form class="email-form" id="verificationForm">
+        <input type="text" name="name" placeholder="Tu nombre completo" required>
+        <input type="email" name="email" placeholder="Tu email" required>
+        <textarea name="message" placeholder="Mensaje adicional (opcional)" rows="2"></textarea>
+        
+        <button type="button" onclick="sendVerificationEmail()">
+          Enviar Verificación
+        </button>
+      </form>
+      
+      <div style="text-align: left; margin-top: 15px;">
+    <a href="javascript:void(0)" onclick="openVerificationModal()" 
+       style="color: #c39c78; text-decoration: none; font-size: 0.9em;">
+      Ayuda
+    </a>
+  </div>
+  
+  <div class="success-message" id="successMessage">
+    <p>¡Solicitud enviada!</p>
+    <p><small> Recibirás la app en menos de 12 horas.</small></p>
+  </div>
+</div>
+  </div>
+</div>
+
+<div id="verificationModal" class="verification-modal">
+  <div class="verification-content">
+    <div class="verification-header">
+      <h1 class="verification-title">Verificación Manual</h1>
+      <p class="verification-subtitle">¿Problemas para Verificar?</p>
+    </div>
+
+    <div class="verification-body">
+      <p class="verification-instruction">Envía un correo electrónico a:</p>
+      
+      <div class="email-container">
+        <div class="email">nexus.codigo.access@gmail.com</div>
+      </div>
+
+      <div class="requirements">
+        <div class="requirement-item">Tu nombre completo</div>
+        <div class="requirement-item">Email donde quieres recibir la APP</div>
+        <div class="requirement-item">Mensaje adicional (opcional)</div>
+      </div>
+
+      <p class="note">Nuestro equipo te contactará en menos de 12 horas con la aplicación</p>
+
+      <button class="btn-accept" onclick="closeVerificationModal()">Aceptar</button>
+    </div>
+
+    <div class="verification-footer">
+      <p class="footer-text">
+        <strong>© NEXUS Código</strong><br>
+        Guardianes de la Memoria Digital
+      </p>
+    </div>
+  </div>
+</div>
+
+<script>
+
+let audio = null;
+let isPlaying = false;
+
+function toggleAudio() {
+  const playBtn = document.querySelector('.play-btn');
+  const footer = document.getElementById('mainFooter');
+  
+  if (!audio) {
+    // Crear el elemento de audio solo la primera vez
+    audio = new Audio('Song.m4a');
+    
+    audio.addEventListener('ended', function() {
+      isPlaying = false;
+      playBtn.textContent = 'Reproducir';
+      playBtn.classList.remove('playing');
+      // Quitar efecto de neón cuando termina el audio
+      footer.classList.remove('neon-effect');
     });
-
-    modalClose.addEventListener('click', () => {
-        modal.style.display = 'none';
-        modalDocument.innerHTML = '';
+    
+    audio.addEventListener('error', function() {
+      alert('Error al cargar el archivo de audio');
+      playBtn.textContent = 'Reproducir';
+      playBtn.classList.remove('playing');
+      footer.classList.remove('neon-effect');
     });
-
-    // Cerrar al clicar fuera
-    window.addEventListener('click', (e) => {
-        if (e.target === modal) {
-            modal.style.display = 'none';
-            modalDocument.innerHTML = '';
-        }
-    });
-
-    // Cerrar con Escape
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.style.display === 'flex') {
-            modal.style.display = 'none';
-            modalDocument.innerHTML = '';
-        }
-    });
-</script>  
+  }
   
-</body>  
+  if (!isPlaying) {
+    // Reproducir
+    audio.play().then(() => {
+      isPlaying = true;
+      playBtn.textContent = 'Pausar';
+      playBtn.classList.add('playing');
+      footer.classList.add('neon-effect');
+    }).catch(error => {
+      console.error('Error al reproducir:', error);
+      alert('No se pudo reproducir el audio. Asegúrate de que el archivo Song.m4a exista.');
+      footer.classList.remove('neon-effect');
+    });
+  } else {
+    audio.pause();
+    isPlaying = false;
+    playBtn.textContent = 'Reproducir';
+    playBtn.classList.remove('playing');
+    // Desactivar efecto de neón
+    footer.classList.remove('neon-effect');
+  }
+}
+
+// Pausar audio cuando se cierra la página
+window.addEventListener('beforeunload', function() {
+  if (audio && isPlaying) {
+    audio.pause();
+    document.getElementById('mainFooter').classList.remove('neon-effect');
+  }
+});
+
+const images = [
+  { src: "img1.png", alt: "Interfaz Principal" },
+  { src: "img2.png", alt: "Menú Documentos" },
+  { src: "img3.png", alt: "Archivos Digitales" },
+  { src: "img4.png", alt: "Navegación Avanzada" }
+];
+
+let currentIndex = 0;
+
+// Inicializar miniaturas
+function initThumbnails() {
+  const thumbnailStrip = document.getElementById('thumbnailStrip');
+  thumbnailStrip.innerHTML = '';
+  
+  images.forEach((image, index) => {
+    const thumb = document.createElement('img');
+    thumb.src = image.src;
+    thumb.alt = image.alt;
+    thumb.className = `thumbnail ${index === currentIndex ? 'active' : ''}`;
+    thumb.onclick = () => goToImage(index);
+    thumbnailStrip.appendChild(thumb);
+  });
+}
+
+function openGallery(startIndex) {
+  currentIndex = startIndex;
+  updateGallery();
+  document.getElementById('galleryModal').style.display = 'flex';
+  initThumbnails();
+}
+
+// Cerrar gallery
+function closeGallery() {
+  document.getElementById('galleryModal').style.display = 'none';
+}
+
+// Imagen anterior
+function prevImage() {
+  currentIndex = (currentIndex - 1 + images.length) % images.length;
+  updateGallery();
+}
+
+// Siguiente imagen
+function nextImage() {
+  currentIndex = (currentIndex + 1) % images.length;
+  updateGallery();
+}
+
+// Ir a imagen específica
+function goToImage(index) {
+  currentIndex = index;
+  updateGallery();
+}
+
+function updateGallery() {
+  const modalImage = document.getElementById('modalImage');
+  const imageCounter = document.getElementById('imageCounter');
+  
+  modalImage.src = images[currentIndex].src;
+  modalImage.alt = images[currentIndex].alt;
+  imageCounter.textContent = `${currentIndex + 1} / ${images.length}`;
+  
+  modalImage.classList.remove('fade-in');
+  void modalImage.offsetWidth;
+  modalImage.classList.add('fade-in');
+  
+  document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+    thumb.classList.toggle('active', index === currentIndex);
+  });
+}
+
+document.querySelectorAll('.zoom-gallery img').forEach((img, index) => {
+  img.addEventListener('click', () => openGallery(index));
+});
+
+document.addEventListener('keydown', (e) => {
+  if (document.getElementById('galleryModal').style.display === 'flex') {
+    if (e.key === 'ArrowLeft') prevImage();
+    if (e.key === 'ArrowRight') nextImage();
+    if (e.key === 'Escape') closeGallery();
+  }
+});
+
+document.getElementById('galleryModal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('galleryModal')) {
+    closeGallery();
+  }
+});
+
+initThumbnails();
+
+let donationStarted = false;
+
+function openDonationModal() {
+  document.getElementById('donationModal').style.display = 'flex';
+}
+
+function closeDonationModal() {
+  document.getElementById('donationModal').style.display = 'none';
+}
+
+function switchTab(tabName) {
+  document.querySelectorAll('.tab-content').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.classList.remove('active');
+  });
+  
+  document.getElementById(tabName + '-tab').classList.add('active');
+  document.querySelectorAll('.tab')[tabName === 'donate' ? 0 : 1].classList.add('active');
+}
+
+function markDonationStarted() {
+  donationStarted = true;
+  setTimeout(() => {
+    document.querySelectorAll('.tab')[1].style.background = '#c39c78';
+    document.querySelectorAll('.tab')[1].style.color = '#000';
+  }, 3000);
+}
+
+function sendVerificationEmail() {
+  const form = document.getElementById('verificationForm');
+  const formData = new FormData(form);
+  
+  const name = formData.get('name');
+  const email = formData.get('email');
+  
+  if (!name || !email) {
+    alert('Por favor completa los campos requeridos');
+    return;
+  }
+  
+  const subject = encodeURIComponent('Verificación de Donación - La Última Página');
+  const body = encodeURIComponent(
+    `Nueva solicitud de acceso:\n\n` +
+    `Nombre: ${name}\n` +
+    `Email: ${email}\n` +
+    `Mensaje: ${formData.get('message') || 'No especificado'}\n\n` +
+    `Fecha: ${new Date().toLocaleString()}\n` +
+    `---\n` +
+    `Por favor, enviar APK a: ${email}`
+  );
+  
+  window.open(`mailto:nexus.codigo.access@gmail.com?subject=${subject}&body=${body}`);
+  
+  document.getElementById('successMessage').style.display = 'block';
+  form.reset();
+  
+  setTimeout(() => {
+    closeDonationModal();
+  }, 5000);
+}
+
+function openAboutModal() {
+  document.getElementById('aboutModal').style.display = 'flex';
+}
+
+function closeAboutModal() {
+  document.getElementById('aboutModal').style.display = 'none';
+}
+
+function contactEmail() {
+  const subject = encodeURIComponent('Contacto - La Última Página');
+  const body = encodeURIComponent(
+    `Hola NEXUS Código,\n\n` +
+    `Me pongo en contacto con ustedes a través de La Última Página de Internet.\n\n` +
+    `Saludos cordiales,`
+  );
+  
+  window.open(`mailto:nexus.codigo.access@gmail.com?subject=${subject}&body=${body}`);
+}
+
+function openVerificationModal() {
+  document.getElementById('verificationModal').style.display = 'flex';
+}
+
+function closeVerificationModal() {
+  document.getElementById('verificationModal').style.display = 'none';
+}
+
+document.getElementById('aboutModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeAboutModal();
+  }
+});
+
+document.getElementById('donationModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeDonationModal();
+  }
+});
+
+document.getElementById('verificationModal').addEventListener('click', function(e) {
+  if (e.target === this) {
+    closeVerificationModal();
+  }
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('galleryModal').style.display === 'flex') {
+      closeGallery();
+    } else if (document.getElementById('aboutModal').style.display === 'flex') {
+      closeAboutModal();
+    } else if (document.getElementById('verificationModal').style.display === 'flex') {
+      closeVerificationModal();
+    } else {
+      closeDonationModal();
+    }
+  }
+});
+
+</script>
+
+</body>
 </html>
